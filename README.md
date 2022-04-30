@@ -274,34 +274,65 @@ namespace Client.Scripts.InteractionScripts
     {
       if ((targetPosition - startPosition).magnitude > (currentPosition - startPosition).magnitude)
       {
-        currentPosition += (targetPosition - startPosition) / maxBulletSpeed;
+        currentPosition += (targetPosition - startPosition).normalized * maxBulletSpeed;
         shotBullet.transform.position = currentPosition;
       }
     }
   }
 }
-
 ```
 ![Trigger Component](https://github.com/aaggarwal10/7WC-GameDev/blob/main/Images/trigger.png?raw=true)
 
-Now, our movement of the character should be complete. To add the wall breaking component, we need to look at the collisions between colliders. If you recall with the rigid body before we used Unity's inbuilt engine to work out the collisions for us. However, in some cases, we do not want to actually have collision physics, but instead only want to check if two objects collide. We can do this through a OnTrigger Script. Simply, what an OnTrigger event does is it checks when a Trigger object collides with a Non-Trigger Object. Using an on Trigger Exit we can simply look for collision through the script:
+Now we can code the target interactions including score text using some events and taking into account the namespaces we have created via the following script: 
+
 ```C#
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
-public class WallDestroy : MonoBehaviour
+using UnityEngine.Events;
+using TMPro;
+namespace Client.Scripts.InteractionScripts
 {
+  public class TargetInteractions : MonoBehaviour
+  {
+    public UnityEvent<bool> onTargetHit;
     public Animator animator;
-    private void OnTriggerExit(Collider coll)
+
+    public TMP_Text scoreText;
+    public Transform blocks;
+
+    private bool isHit;
+    private int score = 0;
+    private void Start()
     {
-        if (coll.tag == "Wall" && animator.GetCurrentAnimatorStateInfo(0).IsName("Punch"))
-        {
-            Destroy(coll.gameObject);
-            Debug.Log(coll.name);
-        }
+      onTargetHit.AddListener(HandleOnTargetHitEvent);
     }
+
+    private void HandleOnTargetHitEvent(bool isDead)
+    {
+      if (isDead)
+      {
+        score += 1;
+        scoreText.text = "Score: " + score;
+        isHit = true;
+      }
+      else
+      {
+        if (isHit)
+        {
+          int numChildren = blocks.childCount;
+          int randomChild = UnityEngine.Random.Range(0, numChildren);
+          Transform block = blocks.GetChild(randomChild);
+          transform.position = new Vector3(block.position.x, block.position.y + (float)0.5 * block.localScale.y, block.position.z);
+          isHit = false;
+        } 
+      }
+      animator.SetBool("Die", isDead);
+    }
+  }
 }
+
 ```
 Note: To put this script on the humanoid character, we want to put it on the hand collider object, which will be in the rigged bone hierarchy. With all of this complete we will have our Wall Breaking Project Complete. 
 
