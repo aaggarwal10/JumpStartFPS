@@ -341,3 +341,7 @@ For the second part of the Lesson, I did not go through the specific Unity edito
 ## Resources
 * **[Unity Documentation](https://docs.unity3d.com/Manual/index.html)**: Unity has a great amount of documentation that should be referenced when looking for syntax or help on specific problems.
 * **[Unity Asset Store](https://assetstore.unity.com/)**: Unity has an amazing asset store with tons of free assets that can be used to get free models and animations for your game.
+
+## Extra Recommentations
+* **[Intellisense Link](https://www.youtube.com/watch?v=2e_81UD-bjk)**: VSCode has great intellisense support for Unity. Followng this tutorial, you can set up VSCode Intellisense for yourself which would help you get coding much faster and learn about the different utilities and Unity functions faster. HIGHLY RECOMMENDED.
+* **[Mixamo Animations](https://www.mixamo.com/)**: Mixamo is a great link for getting animations and character models for your game. I encourage you to try to download an animation & character from Mixamo to use in you game jam submission. I talked a little about the animation pane in this tutorial, but if you want a deeper dive here is another [youtube tutorial](https://www.youtube.com/watch?v=583R9LgRZPA) that goes deeper into animations.
