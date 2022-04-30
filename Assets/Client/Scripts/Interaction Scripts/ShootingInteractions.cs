@@ -70,7 +70,7 @@ namespace Client.Scripts.InteractionScripts
     {
       if ((targetPosition - startPosition).magnitude > (currentPosition - startPosition).magnitude)
       {
-        currentPosition += (targetPosition - startPosition) / maxBulletSpeed;
+        currentPosition += (targetPosition - startPosition).normalized * maxBulletSpeed;
         shotBullet.transform.position = currentPosition;
       }
     }
